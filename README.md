@@ -26,6 +26,8 @@ object StringsToDatesExample {
 
 Unless you are comfortable throwing an Exception when `LocalDate.parse` fails, you probably wouldn't do the implementation above. You might change the return type to `Try[List[LocalDate]]` but then you have to find a way to handle the error on each call site or propagate `Try` throughout your code.
 
+Let's look at the same example using this library (code is nearly the same):
+
 ```scala
 import com.github.xplosunn.expected.XList
 import java.time.LocalDate
