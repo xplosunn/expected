@@ -24,11 +24,21 @@ case class XList[A] private (private val underlying: Try[List[A]]) {
     XMap.from(underlying.map(_.toMap))
 
   def findAtMostOne(predicate: A => Boolean): XOption[A] =
-    XOption.from(underlying.map(_.filter(predicate)).flatMap {
-      case Nil => Success(None)
-      case head :: Nil => Success(Some(head))
-      case _ => Failure(Unexpected("there was more than one element satisfying the predicate"))
-    })
+    underlying match {
+      case Failure(exception) => XOption.from(Failure(exception))
+      case Success(list) =>
+        var found: Option[A] = None
+        for (elem <- list) {
+          if (predicate(elem)) {
+            if (found.isEmpty) {
+              found = Some(elem)
+            } else {
+              return XOption.from(Failure(Unexpected("there was more than one element satisfying the predicate")))
+            }
+          }
+        }
+        XOption.from(found)
+    }
 
   def atMostOne(): XOption[A] =
     XOption.from(underlying.flatMap {
