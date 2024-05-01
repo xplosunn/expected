@@ -39,6 +39,6 @@ case class XMap[K, V] private(underlying: Try[Map[K, V]]) {
       case Success(value) => Right(value)
     }
 
-  def insideXValue(): XValue[XMap[K, V]] =
-    XValue(this)
+  def asXValue(): XValue[Map[K, V]] =
+    XValue(underlying)
 }

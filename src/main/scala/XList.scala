@@ -51,6 +51,6 @@ case class XList[A] private (private val underlying: Try[List[A]]) {
       case Success(value) => Right(value)
     }
 
-  def insideXValue(): XValue[XList[A]] =
-    XValue(this)
+  def asXValue(): XValue[List[A]] =
+    XValue(underlying)
 }

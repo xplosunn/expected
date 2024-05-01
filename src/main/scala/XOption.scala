@@ -39,6 +39,6 @@ case class XOption[A] private (private val underlying: Try[Option[A]]) {
       case Success(value) => Right(value)
     }
 
-  def insideXValue(): XValue[XOption[A]] =
-    XValue(this)
+  def asXValue(): XValue[Option[A]] =
+    XValue(underlying)
 }

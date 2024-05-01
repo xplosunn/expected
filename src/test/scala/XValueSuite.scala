@@ -3,13 +3,13 @@ package com.github.xplosunn.expected
 class XValueSuite extends munit.FunSuite {
   test("for comprehension combining all") {
     val obtained = for {
-      list <- XList(1, 2).insideXValue()
-      option <- XOption("").insideXValue()
-      map <- XMap(true -> false).insideXValue()
+      list <- XList(1, 2).asXValue()
+      option <- XOption("").asXValue()
+      map <- XMap(true -> false).asXValue()
       value <- XValue(1d)
     } yield (list, option, map, value)
 
-    val expected = XValue((XList(1, 2), XOption(""), XMap(true -> false), 1d))
+    val expected = XValue((List(1, 2), Option(""), Map(true -> false), 1d))
     assertEquals(obtained, expected)
   }
 }
